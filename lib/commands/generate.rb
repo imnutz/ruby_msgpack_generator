@@ -21,9 +21,18 @@ module MsgpackGenerator
         records = []
         (1..total).each do |index|
           record = {
-            id: index,
-            title: Faker::Lorem.sentence,
-            description: Faker::Lorem.paragraph
+            username: Faker::Internet.username,
+            password: Faker::Internet.password,
+            domain_name: Faker::Internet.domain_name,
+            domain_word: Faker::Internet.domain_word,
+            domain_suffix: Faker::Internet.domain_suffix,
+            ip_v4_address: Faker::Internet.ip_v4_address,
+            private_ip_v4_address: Faker::Internet.private_ip_v4_address,
+            ip_v6_address: Faker::Internet.ip_v6_address,
+            mac_address: Faker::Internet.mac_address,
+            url: Faker::Internet.url,
+            user_agent: Faker::Internet.user_agent,
+            uuid: Faker::Internet.uuid
           }
 
           records << record
