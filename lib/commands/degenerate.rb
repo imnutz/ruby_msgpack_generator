@@ -11,20 +11,21 @@ module MsgpackGenerator
       end
 
       private
+
       def unpack_msgpack_file(file_name)
         if file_name.match(/\.gz$/)
           File.open(file_name, "r") do |f|
             reader = Zlib::GzipReader.new(f)
             unpacker = MessagePack::Unpacker.new(reader)
             unpacker.each do |obj|
-              puts obj
+              $stdout.puts obj
             end
           end
         else
           File.open(file_name, "r") do |f|
             unpacker = MessagePack::Unpacker.new(f)
             unpacker.each do |obj|
-              puts obj
+              $stdout.puts obj
             end
           end
         end

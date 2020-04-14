@@ -25,20 +25,22 @@ record = {
 ```
 
 ## Usage
+```
+usage: mpg COMMAND [options]
+
+options:
+  -t, --total [NUM]                Number of records, default is 10
+      --gzip                       Gzip
+  -o, --output FILE_NAME           Output file
+  -i, --input FILE                 Message pack file for extracting data, either .msgpack or .msgpack.gz
+  -f, --fields FIELDS              Fields to be generated, comma separated
+      --version                    show version
+
+commands:
+  gen       # generate message pack data
+  degen     # extract data from a .msgpack or .msgpack.gz file
 
 ```
-Usage: mpg [command] [options]
-
-Commands:
-gen, degen
-
-Options:
-  -t, --total [NUM]                Number of records
-  -z, --gzip [flag]                Gzip
-  -o, --output [FILE NAME]         Output file for packing
-  -i, --input [FILE NAME]          Input file for unpacking
-```
-
 ## Examples
 ```bash
 # generate 20 records and zip it as .gz format
@@ -48,4 +50,10 @@ Options:
 ```bash
 # unpack a msgpack file
 > ./bin/mpg degen -i example_file.msgpack or example_file.msgpack.gz
+```
+
+```bash
+# generate data with pre-defined fields
+# only string supported
+> ./bin/mpg gen -t 200 -o file_name -f col1,col2,col3
 ```

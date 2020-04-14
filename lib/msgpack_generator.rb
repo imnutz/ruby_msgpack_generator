@@ -9,12 +9,12 @@ module MsgpackGenerator
     COMMAND_MAPPINGS = OpenStruct.new({
       "gen": OpenStruct.new({
         "file": "generate",
-        "command": "Generate"
+        "command": "Generate",
       }),
       "degen": OpenStruct.new({
         "file": "degenerate",
-        "command": "Degenerate"
-      })
+        "command": "Degenerate",
+      }),
     })
 
     def initialize
@@ -29,49 +29,64 @@ module MsgpackGenerator
     def main(argv = [])
       args = @optparse.parse(argv)
 
-      begin
-        command_name = args.shift
-        if command_name.nil?
-          puts @optparse
-          exit(1)
-        end
+      command_name = args.shift
+      if command_name.nil?
+        usage nil
+        exit(1)
+      end
 
-        begin
-          command = get_command(command_name)
-          command.run
-        rescue NameError => name_err
-          puts name_err.message
-          puts @optparse
-        rescue LoadError => load_err
-          puts load_err.message
-          puts @optparse
-        end
+      begin
+        command = get_command(command_name)
+        command.run
+      rescue
+        usage nil
       end
     end
 
     def define_options
-      @optparse.banner = "Usage: mpg [command] [options]"
-      @optparse.separator ""
-      @optparse.separator "Commands:"
-      @optparse.separator "gen, degen"
-      @optparse.separator ""
-      @optparse.separator "Options:"
+      @optparse.banner = <<EOF
+usage: #{File.basename($0)} COMMAND [options]
 
-      @optparse.on("-t", "--total [NUM]", Numeric, "Number of records") do |total|
+options:
+EOF
+      @optparse.summary_indent = "  "
+      (class << self; self; end).module_eval do
+        define_method(:usage) do |errmsg|
+          $stdout.puts @optparse.to_s
+          $stdout.puts ""
+          $stdout.puts <<EOF
+commands:
+  gen       # generate message pack data
+  degen     # extract data from a .msgpack or .msgpack.gz file
+
+EOF
+          return 0
+        end
+      end
+
+      @optparse.on("-t", "--total [NUM]", Numeric, "Number of records, default is 10") do |total|
         options[:total] = total
       end
 
-      @optparse.on("-z", "--gzip [flag]", "Gzip") do |gzip|
+      @optparse.on("--gzip", "Gzip") do |gzip|
         options[:gzip] = true
       end
 
-      @optparse.on("-o", "--output [FILE NAME]", String, "File name") do |file_name|
+      @optparse.on("-o", "--output FILE_NAME", String, "Output file") do |file_name|
         options[:output] = file_name
       end
 
-      @optparse.on("-i", "--input [FILE NAME]", String, "File name") do |file_name|
+      @optparse.on("-i", "--input FILE", String, "Message pack file for extracting data, either .msgpack or .msgpack.gz") do |file_name|
         options[:input] = file_name
       end
+
+      @optparse.on("-f", "--fields FIELDS", String, "Fields to be generated, comma separated") do |fields|
+        options[:fields] = fields
+      end
+      @optparse.on("--version", "show version") {
+        $stdout.puts "Message pack generator #{VERSION}"
+        exit 0
+      }
     end
 
     def const_name(name)
