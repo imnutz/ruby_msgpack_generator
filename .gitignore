@@ -6,3 +6,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+*.msgpack
+*.msgpack.gz
