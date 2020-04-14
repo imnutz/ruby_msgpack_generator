@@ -1,35 +1,33 @@
 # MsgpackGenerator
+Tiny tool to generate [Message Pack](https://msgpack.org/) data
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/msgpack_generator`. To experiment with that code, run `bin/mpg` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'msgpack_generator'
+## Install gems
+```bash
+$ bundle
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install msgpack_generator
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+Usage: mpg [command] [options]
 
-## Development
+Commands:
+gen, degen
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/mpg` for an interactive prompt that will allow you to experiment.
+Options:
+    -t, --total [NUM]                Number of records
+    -z, --gzip [flag]                Gzip
+    -o, --output [FILE NAME]         File name
+    -i, --input [FILE NAME]          File name
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## Examples
+```bash
+# generate 20 records and zip it as .gz format
+> ./bin/mpg gen -t 20 -o tadada -z
+```
 
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/msgpack_generator.
+```bash
+# unpack a msgpack file
+> ./bin/mpg degen -i example_file.msgpack or example_file.msgpack.gz
+```
