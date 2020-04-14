@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "msgpack_generator"
+
+app = MsgpackGenerator::Application.new
+app.main(ARGV.dup)
+

@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    msgpack_generator (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    concurrent-ruby (1.1.6)
+    faker (2.11.0)
+      i18n (>= 1.6, < 2)
+    i18n (1.8.2)
+      concurrent-ruby (~> 1.0)
+    msgpack (1.3.3)
+    rake (10.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.17)
+  faker (~> 2.11.0)
+  msgpack (~> 1.3.3)
+  msgpack_generator!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.17.2
